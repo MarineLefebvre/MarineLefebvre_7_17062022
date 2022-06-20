@@ -1,4 +1,5 @@
 import '../styles/Header.css';
+import {Link} from "react-router-dom";
 
 function Header() {
     return(
@@ -8,11 +9,13 @@ function Header() {
                     <span className="fs-4 logoColor">Groupomania</span>
                 </a>
 
+                {/*Link To permet de passer un url pour matcher avec les routes défini dans index.js et afficher le bon component dans la single page app*/}
                 <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                    <a className="me-3 py-2 text-dark text-decoration-none" href="#">Posts</a>
-                    <a className="me-3 py-2 text-dark text-decoration-none" href="#">Inscription</a>
-                    <a className="me-3 py-2 text-dark text-decoration-none" href="#">Se connecter</a>
-                    <a className="py-2 text-dark text-decoration-none" href="#">Déconnexion</a>
+                    <Link to="/posts" className="me-3 py-2 text-dark text-decoration-none" href="#">Posts</Link>
+                    <Link to="/post" className="me-3 py-2 text-dark text-decoration-none" href="#">Créer un Post</Link>
+                    <Link to="/subscribe" className="me-3 py-2 text-dark text-decoration-none" href="#">Inscription</Link>
+                    <Link to="/login" className="me-3 py-2 text-dark text-decoration-none" href="#">Se connecter</Link>
+                    <Link to="/logout" className="py-2 text-dark text-decoration-none" href="#">Déconnexion</Link>
                 </nav>
             </div>
 
