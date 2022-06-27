@@ -7,7 +7,7 @@ const auth = require('../middleware/auth')
 
 const multer = require('../middleware/multer-config');
 
-const sauceCtrl = require('../controllers/sauceController');
+const postCtrl = require('../controllers/postController');
 
 module.exports = router;
 
@@ -17,26 +17,26 @@ module.exports = router;
 
 //On ajoute "auth" à l'ensemble des routes car l'utilisateur a besoin d'être connecté pour s'y rendre
 //ce qui empeche par exemple d'accéder au listing des sauces sans être connecté
-//si l'utilisateur n'est pas connecté et qu'il se rend à l'adresse : http://localhost:4200/sauces => il sera invité à se connecter
+//si l'utilisateur n'est pas connecté et qu'il se rend à l'adresse : http://localhost:4200/posts => il sera invité à se connecter
 
 //on ajoute également multer pour les méthodes ayant besoin de sotcker/supprimer/mettre à jour des images
 
 //récupérer tout les éléments
-router.get('/', auth, sauceCtrl.getAll);
+router.get('/', auth, postCtrl.getAll);
 
 //Insérer un objet en base de données
-router.post('/', auth, multer, sauceCtrl.createSauce);
+router.post('/', auth, multer, postCtrl.createPost);
 
 //récupérer un objet spécifique
-router.get('/:id', auth, sauceCtrl.getOneSauce);
+router.get('/:id', auth, postCtrl.getOnePost);
 
 //mettre à jour un objet spécifique
-router.put('/:id', auth, multer, sauceCtrl.modifySauce);
+router.put('/:id', auth, multer, postCtrl.modifyPost);
 
 //supprimer un objet spécifique
-router.delete('/:id', auth, sauceCtrl.deleteSauce);
+router.delete('/:id', auth, postCtrl.deletePost);
 
 //mettre à jour like et dislike
-router.post('/:id/like', auth, sauceCtrl.likeSauce);
+router.post('/:id/like', auth, postCtrl.likePost);
 
 module.exports = router;

@@ -6,7 +6,7 @@ const path = require('path');
 //utilisation des vaiables d'environnements
 require('dotenv').config();
 
-const sauceRoute = require('./routes/sauceRoute');
+const postRoutes = require('./routes/postRoute');
 const userRoutes = require('./routes/userRoute');
 
 
@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 //repertoire des images
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-//utilisation du router en ajoutant la base de l'url qui s'ajoutera devant les url défini dans routes/sauceController.js
-app.use('/api/sauces', sauceRoute);
+//utilisation du router en ajoutant la base de l'url qui s'ajoutera devant les url défini dans routes/postController.js
+app.use('/api/posts', postRoutes);
 app.use('/api/auth', userRoutes);
 module.exports = app;

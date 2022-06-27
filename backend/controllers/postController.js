@@ -1,35 +1,33 @@
-const Sauce = require('../models/sauceModel');
+const Post = require('../models/postModel');
 const fs = require('fs');
 
-//définition des méthode pour les sauces/interaction avec la BDD
+//définition des méthode pour les posts/interaction avec la BDD
 
-exports.createSauce = (req, res, next) => {
-    //récupérer la sauce dans le body
-    const sauceObject = JSON.parse(req.body.sauce);
-    delete sauceObject._id;
-    const sauce = new Sauce({
-        ...sauceObject,
+exports.createPost = (req, res, next) => {
+    //récupérer le post dans le body
+    const postObject = JSON.parse(req.body.post);
+    delete postObject._id;
+    const post = new Post({
+        ...postObject,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
         likes : 0,
-        dislikes : 0,
-        usersLiked : [],
-        usersDisliked : []
+        usersLiked : []
     });
     //save() permet de sotocker un objet en BDD
-    sauce.save()
+    post.save()
         //then() => ce qui est exécuté après la requête API si succès
         .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
         //catch => ce qui est exécuté après la reqête API si erreur
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.getOneSauce = (req, res, next) => {
-    //findOne => récupère un élément qui correspond au param, ici l'id de la sauce
-    Sauce.findOne({
+exports.getOnePost = (req, res, next) => {
+    //findOne => récupère un élément qui correspond au param, ici l'id du post
+    Post.findOne({
         _id: req.params.id
     }).then(
-        (sauce) => {
-            res.status(200).json(sauce);
+        (post) => {
+            res.status(200).json(post);
         }
     ).catch(
         (error) => {
@@ -40,19 +38,19 @@ exports.getOneSauce = (req, res, next) => {
     );
 };
 
-exports.modifySauce = (req, res, next) => {
-    //On recherche la sauce pour supprimer l'image correspondante
-    Sauce.findOne({ _id: req.params.id })
-        .then(sauce => {
-            const sauceObject = req.file ?
+exports.modifyPost = (req, res, next) => {
+    //On recherche le post pour supprimer l'image correspondante
+    Post.findOne({ _id: req.params.id })
+        .then(post => {
+            const postObject = req.file ?
                 {
-                    ...JSON.parse(req.body.sauce),
+                    ...JSON.parse(req.body.post),
                     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
                 } : { ...req.body };
-            //updateOne => mise à jour de l'élement qui a le param passé, ici l'id de la sauce et l'userId
-            Sauce.updateOne({ _id: req.params.id, userId : sauceObject.userId}, { ...sauceObject, _id: req.params.id })
+            //updateOne => mise à jour de l'élement qui a le param passé, ici l'id du post et l'userId
+            Post.updateOne({ _id: req.params.id, userId : postObject.userId}, { ...postObject, _id: req.params.id })
                 .then(() => {
-                    const filename = sauce.imageUrl.split('/images/')[1];
+                    const filename = post.imageUrl.split('/images/')[1];
                     //on supprime l'image si on a un nouveau fichier image
                     if(req.file){
                         fs.unlink(`images/${filename}`, () => {
@@ -66,13 +64,13 @@ exports.modifySauce = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-exports.deleteSauce = (req, res, next) => {
-    Sauce.findOne({ _id: req.params.id })
-        .then(sauce => {
-            const filename = sauce.imageUrl.split('/images/')[1];
+exports.deletePost = (req, res, next) => {
+    Post.findOne({ _id: req.params.id })
+        .then(post => {
+            const filename = post.imageUrl.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {
-                //deleteOne => supprimer l'element qui a le param, ici l'id de la sauce
-                Sauce.deleteOne({ _id: req.params.id })
+                //deleteOne => supprimer l'element qui a le param, ici l'id de la post
+                Post.deleteOne({ _id: req.params.id })
                     .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
                     .catch(error => res.status(400).json({ error }));
             });
@@ -84,9 +82,9 @@ exports.deleteSauce = (req, res, next) => {
 
 exports.getAll = (req, res, next) => {
     //find => récupère tout en BDD
-    Sauce.find().then(
-        (sauces) => {
-            res.status(200).json(sauces);
+    Post.find().then(
+        (posts) => {
+            res.status(200).json(posts);
         }
     ).catch(
         (error) => {
@@ -98,26 +96,24 @@ exports.getAll = (req, res, next) => {
 };
 
 
-exports.likeSauce = (req, res, next) => {
-    //récupération de la sauce pour connaitre le nombre de like/dislike
-    Sauce.findOne({
+exports.likePost = (req, res, next) => {
+    //récupération du post pour connaitre le nombre de like
+    Post.findOne({
         _id: req.params.id
     }).then(
-        (sauce) => {
-            let likes = sauce.likes;
-            let usersLiked = sauce.usersLiked;
-            let dislikes = sauce.dislikes;
-            let usersDisliked = sauce.usersDisliked;
+        (post) => {
+            let likes = post.likes;
+            let usersLiked = post.usersLiked;
             //si l'utilisateur n'a pas encore liké
             if(req.body.like === 1){
                 likes = likes+1;
                 usersLiked.push(req.body.userId);
             }
             //si l'utilisateur n'a pas encore disliké
-            else if(req.body.like === -1){
+            /*else if(req.body.like === -1){
                 dislikes = dislikes+1;
                 usersDisliked.push(req.body.userId);
-            }
+            }*/
             //si l'utilisateur avait déjà liké ou disliké
             else {
                 //suppression user de la liste des users qui ont like et on décremente nb like si on trouve le user dans le tab
@@ -128,14 +124,14 @@ exports.likeSauce = (req, res, next) => {
                     }
                 }
                 //suppression user de la liste des users qui ont dislike et on décremente nb dislike si on trouve le user dans le tab
-                for (let i = 0; i < usersDisliked.length; i++) {
+                /*for (let i = 0; i < usersDisliked.length; i++) {
                     if (usersDisliked[i] === req.body.userId) {
                         usersDisliked.splice(i, 1);
                         dislikes = dislikes-1;
                     }
-                }
+                }*/
             }
-            Sauce.updateOne({ _id: req.params.id }, { likes: likes,usersLiked : usersLiked, dislikes: dislikes, usersDisliked: usersDisliked})
+            Post.updateOne({ _id: req.params.id }, { likes: likes,usersLiked : usersLiked})
                 .then(() =>{
                     res.status(200).json({ message: 'Objet modifié !'})
                 })
