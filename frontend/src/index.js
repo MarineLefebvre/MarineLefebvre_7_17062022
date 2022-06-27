@@ -22,7 +22,7 @@ root.render(
             {/*Déclaration des routes
             Dans le Header on a des Link to qui matche avec un url ici
             Si l'url matche alors le component associé est affiché*/}
-            <Route path="/" element={<Login/>} />
+            <Route path="/" element={<ListPosts/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/subscribe" element={<Subscribe/>} />
             <Route path="/posts" element={<ListPosts/>} />
