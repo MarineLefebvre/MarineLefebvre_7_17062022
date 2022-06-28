@@ -7,6 +7,7 @@ const thingSchema = mongoose.Schema({
     description: { type: String, required: true },
     imageUrl: { type: String, required: true },
     userId: { type: String, required: true },
+    dateCreation: {type: Date, required: true},
     likes: {type: Number, required: false },
     usersLiked: {type: [String], required: false},
 });

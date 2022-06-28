@@ -82,7 +82,7 @@ exports.deletePost = (req, res, next) => {
 
 exports.getAll = (req, res, next) => {
     //find => récupère tout en BDD
-    Post.find().then(
+    Post.find().sort({"dateCreation": -1}).then(
         (posts) => {
             res.status(200).json(posts);
         }
