@@ -26,6 +26,7 @@ router.get('/', auth, postCtrl.getAll);
 
 //Insérer un objet en base de données
 router.post('/', auth, multer, postCtrl.createPost);
+//router.post('/', multer, postCtrl.createPost);
 
 //récupérer un objet spécifique
 router.get('/:id', auth, postCtrl.getOnePost);

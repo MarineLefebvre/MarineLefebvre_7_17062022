@@ -1,5 +1,6 @@
 const http = require('http');
 const app = require('./app');
+var cors = require('cors');
 
 const normalizePort = val => {
     const port = parseInt(val, 10);
@@ -15,6 +16,8 @@ const normalizePort = val => {
 //le port de l'api est celui défini dans les variables d'environnement ou 3000 par défaut
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
+//permet les requêtes cros domain
+app.use(cors({origin: "*" }));
 
 const errorHandler = error => {
     if (error.syscall !== 'listen') {

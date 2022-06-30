@@ -6,6 +6,7 @@ const fs = require('fs');
 exports.createPost = (req, res, next) => {
     //récupérer le post dans le body
     const postObject = JSON.parse(req.body.post);
+    console.log(postObject);
     delete postObject._id;
     const post = new Post({
         ...postObject,

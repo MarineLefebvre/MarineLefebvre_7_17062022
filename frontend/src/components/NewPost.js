@@ -1,7 +1,7 @@
 import '../styles/NewPosts.css';
 import {useState} from "react";
 
-function NewPost(){
+function NewPost({user}){
 
     //on ajoute un contrôle sur l'iamge pour la scoker dès qu'ele change
     const [imageValue, setImageValue] = useState('');
@@ -17,9 +17,33 @@ function NewPost(){
     function handleSubmit(e) {
         //pour emepcher la page de recharger
         e.preventDefault();
-        alert(e.target['titre'].value);
-        alert(e.target['description'].value);
-        alert(imageValue);
+        const formData = new FormData();
+        formData.append('post', JSON.stringify({
+            name: e.target['titre'].value,
+            description : e.target['description'].value,
+            userId : user.userId,
+            dateCreation : new Date()
+        }));
+        formData.append('image', imageValue);
+
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: formData
+        };
+
+        //Exécution de la req
+        fetch('http://localhost:3000/api/posts', requestOptions)
+            .then(response => {
+                if (response.ok) {
+                    alert("Le post a bien été créé !");
+                    return response.json();
+                } else {
+                    throw new Error('Une erreur est survenue....');
+                }
+            })
+            .then(data => console.log(data));
     }
 
     return(
@@ -39,7 +63,7 @@ function NewPost(){
                 {/*On affiche l'image uniquement si on en a chargé une*/}
                 {imageValue && <img src={imageValue} className="imagePost" alt="image du post"/>}
             </div>
-            <button className="btn">Créer un post</button>
+            <button className="btn btn-primary">Créer un post</button>
         </form>
     )
 }

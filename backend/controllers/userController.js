@@ -9,7 +9,8 @@ exports.signup = (req, res, next) => {
         .then(hash => {
             const userSignup = new user({
                 email: req.body.email,
-                password: hash
+                password: hash,
+                isAdmin: req.body.isAdmin
             });
             userSignup.save()
                 .then(() => {
@@ -40,6 +41,7 @@ exports.login = (req, res, next) => {
                     //Si iles correspondent, je génére le token d'accès
                     res.status(200).json({
                         userId: user._id,
+                        isAdmin: user.isAdmin,
                         token: jwt.sign(
                             { userId: user._id },
                             process.env.SECRET_KEY,

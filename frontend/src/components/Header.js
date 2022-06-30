@@ -2,7 +2,19 @@ import '../styles/Header.css';
 import {Link} from "react-router-dom";
 import logo from '../assets/icon-left-font.png'
 
-function Header() {
+function Header({user, setUser, isAuth, setIsAuth}) {
+
+
+    //Fonction de déconnexion
+    function logout(e) {
+        //ON met le boolean de connexion à false
+        setIsAuth(false);
+        //On supprime l'utilisateur du localStorage
+        localStorage.removeItem('user');
+        //On met le user dans le state à null via la fonction de mise à jour
+        setUser = null;
+    }
+
 
     return(
         <header>
@@ -14,22 +26,23 @@ function Header() {
                     </span>
                 </a>
 
+                {/*On affiche les éléments du header en fonction de la connexion ou non de l'utilisateur*/}
                 <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                    <Link className="me-3 py-2 text-dark text-decoration-none" to="/posts">
+                    {isAuth && <Link className="me-3 py-2 text-dark text-decoration-none" to="/posts">
                         Posts
-                    </Link>
-                    <Link className="me-3 py-2 text-dark text-decoration-none" to="/post">
+                    </Link>}
+                    {isAuth && <Link className="me-3 py-2 text-dark text-decoration-none" to="/post">
                         Nouveau Post
-                    </Link>
-                    <Link className="me-3 py-2 text-dark text-decoration-none" to="/subscribe">
+                    </Link>}
+                    {!isAuth && <Link className="me-3 py-2 text-dark text-decoration-none" to="/subscribe">
                         Inscription
-                    </Link>
-                    <Link className="me-3 py-2 text-dark text-decoration-none" to="/login">
+                    </Link>}
+                    {!isAuth && <Link className="me-3 py-2 text-dark text-decoration-none" to="/login">
                         Connexion
-                    </Link>
-                    <Link className="py-2 text-dark text-decoration-none" to="/">
+                    </Link>}
+                    {isAuth && <Link className="py-2 text-dark text-decoration-none" to="/" onClick={logout}>
                         Déconnexion
-                    </Link>
+                    </Link>}
                 </nav>
             </div>
 
