@@ -22,11 +22,10 @@ module.exports = router;
 //on ajoute également multer pour les méthodes ayant besoin de sotcker/supprimer/mettre à jour des images
 
 //récupérer tout les éléments
-router.get('/', auth, postCtrl.getAll);
+router.get('/', auth,  postCtrl.getAll);
 
 //Insérer un objet en base de données
 router.post('/', auth, multer, postCtrl.createPost);
-//router.post('/', multer, postCtrl.createPost);
 
 //récupérer un objet spécifique
 router.get('/:id', auth, postCtrl.getOnePost);

@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 const path = require('path');
+const cors = require("cors");
+app.use(cors());
 
 //utilisation des vaiables d'environnements
 require('dotenv').config();

@@ -5,31 +5,41 @@ function NewPost({user}){
 
     //on ajoute un contrôle sur l'iamge pour la scoker dès qu'ele change
     const [imageValue, setImageValue] = useState('');
+    const [image, setImage] = useState();
 
     //On stocke la valeur de l'input image
     function changeImage(e) {
-        const [file] = e.target.files;
+        const file = e.target.files[0];
+        //ON stocke le fichier image
+        setImage(file);
+        //On crée un objectURL pour l'afficher
         setImageValue(URL.createObjectURL(file));
     }
 
+    //TODO envoi image
     //ICI on utilise un formualire non contrôlé (sauf image) car pas de contrôle à faire sur les champs
     //Fonction de validation du formulaire
     function handleSubmit(e) {
         //pour emepcher la page de recharger
         e.preventDefault();
+        //ON crée un formData (mise en forme des données du body)
         const formData = new FormData();
+        //ON y ajoute le user
         formData.append('post', JSON.stringify({
             name: e.target['titre'].value,
             description : e.target['description'].value,
-            userId : user.userId,
+            userId : JSON.parse(user).userId,
             dateCreation : new Date()
         }));
-        formData.append('image', imageValue);
+        //ON y ajoute l'image
+        formData.append('image', image);
 
-
+        //ON ajoute dans le header le token d'authent
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Authorization': JSON.parse(user).token
+            },
             body: formData
         };
 
@@ -43,7 +53,10 @@ function NewPost({user}){
                     throw new Error('Une erreur est survenue....');
                 }
             })
-            .then(data => console.log(data));
+            .then(data => {
+                console.log(data);
+                window.location = '/posts';
+            });
     }
 
     return(
@@ -57,7 +70,7 @@ function NewPost({user}){
                 <input type="text" className="form-control" id="description" name="description" placeholder="Veuillez saisir une description" required/>
             </div>
             <div className="form-group">
-                <input type="file" accept="image/*" name="image" required
+                <input type="file" accept="image/*" id="image" name="image" required
                        onChange={changeImage}
                 />
                 {/*On affiche l'image uniquement si on en a chargé une*/}

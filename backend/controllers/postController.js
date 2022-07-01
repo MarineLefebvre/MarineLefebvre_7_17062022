@@ -6,10 +6,10 @@ const fs = require('fs');
 exports.createPost = (req, res, next) => {
     //récupérer le post dans le body
     const postObject = JSON.parse(req.body.post);
-    console.log(postObject);
     delete postObject._id;
     const post = new Post({
         ...postObject,
+        //Récupèrer l'image dans le file passé à la requête
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
         likes : 0,
         usersLiked : []
@@ -80,10 +80,9 @@ exports.deletePost = (req, res, next) => {
 };
 
 
-
 exports.getAll = (req, res, next) => {
     //find => récupère tout en BDD
-    Post.find().sort({"dateCreation": -1}).then(
+    Post.find().sort({"dateCreation": "desc"}).then(
         (posts) => {
             res.status(200).json(posts);
         }

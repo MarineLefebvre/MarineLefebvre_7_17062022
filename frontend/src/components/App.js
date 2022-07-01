@@ -14,13 +14,12 @@ import React, {useEffect, useState} from "react";
 function App(){
 
     //Création de variables dans le state
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(localStorage.getItem('user'));
     const [isAuth, setIsAuth] = useState(false);
 
     //UseEffect et [user] pour effectuer cela quand le user change
     useEffect(() => {
         //On récupère dans le localStorage le userId, son boolean isAdmin et son token
-        setUser(localStorage.getItem('user'));
         //Si on récupère un utilisateur, on considère qu'il est connecté
         if(user != null) setIsAuth(true);
     }, [user]);
@@ -51,7 +50,9 @@ function App(){
                        isAuth={isAuth}
                        setIsAuth={setIsAuth}/>} />
             <Route exact path="/subscribe" element={<Subscribe/>} />
-            <Route exact path="/posts" element={<ListPosts/>} />
+            <Route exact path="/posts" element={<ListPosts
+                    user={user}
+                    setUser={setUser}/>} />
             {/*On passe l'id de l'utilisateur*/}
             <Route exact path="/post/:postId" element={<NewPost/>} />
             <Route exact path="/post" element={<NewPost user={user}/>} />
