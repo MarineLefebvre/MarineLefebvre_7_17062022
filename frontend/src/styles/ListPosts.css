@@ -1,0 +1,29 @@
+.card{
+    width: 60%;
+    height: max-content;
+    margin-bottom: 2em;
+}
+
+.card-img-top{
+    max-height: 30em;
+    object-fit: cover;
+}
+
+.blockPosts{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.horodate{
+    color : #FFD7D7;
+}
+
+.card-title{
+    color : #FD2D01;
+}
+
+.card-text{
+    color : #4E5166;
+}

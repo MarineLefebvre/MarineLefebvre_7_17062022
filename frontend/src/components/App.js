@@ -10,6 +10,7 @@ import ListPosts from "./ListPosts";
 import NewPost from "./NewPost";
 import Footer from "./Footer";
 import React, {useEffect, useState} from "react";
+import OnePost from "./OnePost";
 
 function App(){
 
@@ -53,8 +54,10 @@ function App(){
             <Route exact path="/posts" element={<ListPosts
                     user={user}
                     setUser={setUser}/>} />
-            {/*On passe l'id de l'utilisateur*/}
-            <Route exact path="/post/:postId" element={<NewPost/>} />
+            {/*On passe l'id du post*/}
+            <Route exact path="/post/:postId" element={<OnePost
+                    user={user}
+                    setUser={setUser}/>} />
             <Route exact path="/post" element={<NewPost user={user}/>} />
         </Routes>
         <Footer/>

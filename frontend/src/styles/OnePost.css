@@ -1,0 +1,52 @@
+.post-container {
+    display: flex;
+}
+
+.post-container > img {
+    width: 60%;
+    height: max-content;
+    flex: 1;
+}
+
+.post-info {
+    padding: 40px 20px;
+    flex: 1;
+}
+
+.post-name {
+    margin: 0;
+    color: #FD2D01;
+}
+
+.like-buttons {
+    display: flex;
+}
+
+.like-buttons > i {
+    margin-right: 0.5em;
+    cursor: pointer;
+}
+
+.btn-delete {
+    background-color: #FD2D01;
+}
+
+.likes {
+    margin: 0 0.4em;
+}
+
+.liked {
+    color: rgba(51, 219, 0, 1);
+}
+
+.like:hover {
+     color: rgba(51, 219, 0, 1);
+}
+
+.control-buttons{
+    display: inline-flex;
+}
+
+.control-buttons > button, .control-buttons > .admin-btn > button{
+    margin: 1em 1em 0 0;
+}

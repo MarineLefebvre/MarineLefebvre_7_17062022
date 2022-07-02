@@ -48,7 +48,7 @@ exports.modifyPost = (req, res, next) => {
                     ...JSON.parse(req.body.post),
                     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
                 } : { ...req.body };
-            //updateOne => mise à jour de l'élement qui a le param passé, ici l'id du post et l'userId
+            //updateOne => mise à jour de l'élement qui a le param passé, ici l'id du post et l'userId (pour sécuriser)
             Post.updateOne({ _id: req.params.id, userId : postObject.userId}, { ...postObject, _id: req.params.id })
                 .then(() => {
                     const filename = post.imageUrl.split('/images/')[1];
