@@ -1,5 +1,7 @@
 import '../styles/OnePost.css';
 import {useEffect, useState} from "react";
+import like from '../assets/like.png'
+import like_green from '../assets/like_green.png'
 
 
 function OnePost({user, setUser}) {
@@ -7,6 +9,8 @@ function OnePost({user, setUser}) {
     //Déclare une variable pour stocker le post retourné par l'API ainsi qu'une fonction de mise à jour
     const [post, setPost] = useState(null);
     const [isLoad, setIsLoad] = useState(false);
+    //variable pour savoir si l'utilsateur à déjà liké ou non le post
+    const [isLiked, setisLiked] = useState(false);
 
     // useEffect et [] pour effectuer la req API uniquement lors du premier appel du component
     useEffect(() => {
@@ -32,6 +36,12 @@ function OnePost({user, setUser}) {
             .then(data => {
                 //data correspond à la liste des posts du plus ancien au plus récent
                 console.log(data);
+                //on regarde si l'id de l'utilisateur se trouve dans la liste des utilisateurs ayant liké le post
+                for (let i=0; i< data.usersLiked.length; i++){
+                    if(data.usersLiked[i] === JSON.parse(localStorage.getItem('user')).userId) {
+                        setisLiked(true);
+                    }
+                }
                 //On stocke le résultat de l'API dans la variable
                 setPost(data);
                 setIsLoad(true);
@@ -45,7 +55,8 @@ function OnePost({user, setUser}) {
 
     //fonction pour mettre à jour un post si il a été créé par l'utilisateur
     function updatePost(){
-        alert("update");
+        //On redirige vers la page de création de post en passant l'id du post en param
+        window.location = '/updatePost/'+post._id;
     }
 
     //fonction pour supprimer un post si il a été créé par l'utilisateur
@@ -53,12 +64,11 @@ function OnePost({user, setUser}) {
         const requestOptions = {
             method: 'DELETE',
             headers: {
-                //TODO : pourquoi user qui est passé depuis le App.js est undefined la première fois ?
-                'Authorization': JSON.parse(localStorage.getItem('user')).token,
+                'Authorization': JSON.parse(user).token,
             }
         };
 
-        //Exécution de la req de type GET
+        //Exécution de la req de type DELETE
         fetch(`http://localhost:3000/api/posts/${post._id}`,requestOptions)
             .then(response => {
                 if (response.ok) {
@@ -75,6 +85,53 @@ function OnePost({user, setUser}) {
             });
     }
 
+    //Fonction pour like et retirer son like d'un post
+    function likePost(){
+        let valueLikeApi;
+        //ON inverse la valeur du boolean au click sur le pouce
+        if (isLiked) {
+            setisLiked(false);
+            valueLikeApi = 0;
+            //On change manuellement la valeur du like pour l'afficher
+            post.likes = post.likes-1;
+        }
+        else {
+            setisLiked(true);
+            valueLikeApi = 1;
+            //On change manuellement la valeur du like pour l'afficher
+            post.likes = post.likes+1;
+        }
+
+        //REQ API pour le like
+        const requestOptionsLike = {
+            method: 'POST',
+            headers: {
+                'Authorization': JSON.parse(user).token,
+                'Content-Type': 'application/json'
+            },
+            //ON ajoute la valeur du like/unlike et le userId au body
+            body: JSON.stringify({
+                userId: JSON.parse(user).userId,
+                like: valueLikeApi
+            })
+        };
+
+        //Exécution de la req de type POST
+        //1 pour liker et 0 pour retirer le like
+        fetch(`http://localhost:3000/api/posts/${post._id}/like`,requestOptionsLike)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Une erreur est survenue....');
+                }
+            })
+            .then(data => {
+                //data correspond à la liste des posts du plus ancien au plus récent
+                console.log(data);
+            });
+    }
+
     return(
         <div>
             {/*On affiche que si on a déjà récupéré le post*/}
@@ -85,8 +142,12 @@ function OnePost({user, setUser}) {
                     <p>{post.description}</p>
                     <div className="like-buttons">
                         <div className="likes">
-                            {/*TODO LIKE ICON*/}
-                            <span>{post.likes}</span>
+                            <button className="btn" onClick={likePost}>
+                                {/*si l'utilisateur à déjà liké on affiche un pouce vert sinon un noir*/}
+                                {!isLiked && <img src={like} alt="icone pouce non liké"/>}
+                                {isLiked && <img src={like_green} alt="icone pouce liké"/>}
+                                <span id="nbLikes">{post.likes}</span>
+                            </button>
                         </div>
 
                     </div>

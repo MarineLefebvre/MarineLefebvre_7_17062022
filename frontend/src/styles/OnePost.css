@@ -33,10 +33,7 @@
 
 .likes {
     margin: 0 0.4em;
-}
-
-.liked {
-    color: rgba(51, 219, 0, 1);
+    display: flex;
 }
 
 .like:hover {

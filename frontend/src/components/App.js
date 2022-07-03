@@ -15,12 +15,12 @@ import OnePost from "./OnePost";
 function App(){
 
     //Création de variables dans le state
+    //On récupère dans le localStorage le userId, son boolean isAdmin et son token
     const [user, setUser] = useState(localStorage.getItem('user'));
     const [isAuth, setIsAuth] = useState(false);
 
     //UseEffect et [user] pour effectuer cela quand le user change
     useEffect(() => {
-        //On récupère dans le localStorage le userId, son boolean isAdmin et son token
         //Si on récupère un utilisateur, on considère qu'il est connecté
         if(user != null) setIsAuth(true);
     }, [user]);
@@ -58,7 +58,8 @@ function App(){
             <Route exact path="/post/:postId" element={<OnePost
                     user={user}
                     setUser={setUser}/>} />
-            <Route exact path="/post" element={<NewPost user={user}/>} />
+            <Route exact path="/post" element={<NewPost user={user}/>}/>
+            <Route exact path="/updatePost/:postId" element={<NewPost user={user}/>}/>
         </Routes>
         <Footer/>
     </BrowserRouter>)
