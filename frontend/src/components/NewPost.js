@@ -15,36 +15,42 @@ function NewPost({user}){
     /*Au premier appel du component on regarde si il y a un postId dans l'url, si il y a, on fait un appel API
     Pour récupérer le post et afficher les infos dans le formulaire*/
     useEffect(() => {
-        setIsLoad(false);
-        //stockage du postId
-        const postId = window.location.href.split("/updatePost/")[1];
 
-        if(postId) {
-            //ON prépare la req en mettant le token dans le header
-            const requestOptions = {
-                method: 'GET',
-                headers: {
-                    //TODO : pourquoi user qui est passé depuis le App.js est undefined la première fois ?
-                    'Authorization': JSON.parse(localStorage.getItem('user')).token,
-                }
-            };
+        //On protège l'url => si l'utilisateur pas authent on le redirige vers la page de connexion
+        if(!JSON.parse(localStorage.getItem('user'))) window.location = "/";
 
-            //Exécution de la req de type GET
-            fetch(`http://localhost:3000/api/posts/${postId}`,requestOptions)
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error('Une erreur est survenue....');
+        else {
+            setIsLoad(false);
+            //stockage du postId
+            const postId = window.location.href.split("/updatePost/")[1];
+
+            if (postId) {
+                //ON prépare la req en mettant le token dans le header
+                const requestOptions = {
+                    method: 'GET',
+                    headers: {
+                        //TODO : pourquoi user qui est passé depuis le App.js est undefined la première fois ?
+                        'Authorization': JSON.parse(localStorage.getItem('user')).token,
                     }
-                })
-                .then(data => {
-                    //data correspond à la liste des posts du plus ancien au plus récent
-                    console.log(data);
-                    //On stocke le résultat de l'API dans la variable
-                    setPost(data);
-                    setIsLoad(true);
-                });
+                };
+
+                //Exécution de la req de type GET
+                fetch(`http://localhost:3000/api/posts/${postId}`, requestOptions)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Une erreur est survenue....');
+                        }
+                    })
+                    .then(data => {
+                        //data correspond à la liste des posts du plus ancien au plus récent
+                        console.log(data);
+                        //On stocke le résultat de l'API dans la variable
+                        setPost(data);
+                        setIsLoad(true);
+                    });
+            }
         }
     }, []);
 

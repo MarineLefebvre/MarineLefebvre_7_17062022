@@ -15,37 +15,42 @@ function OnePost({user, setUser}) {
     // useEffect et [] pour effectuer la req API uniquement lors du premier appel du component
     useEffect(() => {
 
-        //ON prépare la req en mettant le token dans le header
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                //TODO : pourquoi user qui est passé depuis le App.js est undefined la première fois ?
-                'Authorization': JSON.parse(localStorage.getItem('user')).token,
-            }
-        };
+        //On protège l'url => si l'utilisateur pas authent on le redirige vers la page de connexion
+        if(!JSON.parse(localStorage.getItem('user'))) window.location = "/";
 
-        //Exécution de la req de type GET
-        fetch(`http://localhost:3000/api/posts/${window.location.href.split("/post/")[1]}`,requestOptions)
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Une erreur est survenue....');
+        else {
+            //ON prépare la req en mettant le token dans le header
+            const requestOptions = {
+                method: 'GET',
+                headers: {
+                    //TODO : pourquoi user qui est passé depuis le App.js est undefined la première fois ?
+                    'Authorization': JSON.parse(localStorage.getItem('user')).token,
                 }
-            })
-            .then(data => {
-                //data correspond à la liste des posts du plus ancien au plus récent
-                console.log(data);
-                //on regarde si l'id de l'utilisateur se trouve dans la liste des utilisateurs ayant liké le post
-                for (let i=0; i< data.usersLiked.length; i++){
-                    if(data.usersLiked[i] === JSON.parse(localStorage.getItem('user')).userId) {
-                        setisLiked(true);
+            };
+
+            //Exécution de la req de type GET
+            fetch(`http://localhost:3000/api/posts/${window.location.href.split("/post/")[1]}`, requestOptions)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Une erreur est survenue....');
                     }
-                }
-                //On stocke le résultat de l'API dans la variable
-                setPost(data);
-                setIsLoad(true);
-            });
+                })
+                .then(data => {
+                    //data correspond à la liste des posts du plus ancien au plus récent
+                    console.log(data);
+                    //on regarde si l'id de l'utilisateur se trouve dans la liste des utilisateurs ayant liké le post
+                    for (let i = 0; i < data.usersLiked.length; i++) {
+                        if (data.usersLiked[i] === JSON.parse(localStorage.getItem('user')).userId) {
+                            setisLiked(true);
+                        }
+                    }
+                    //On stocke le résultat de l'API dans la variable
+                    setPost(data);
+                    setIsLoad(true);
+                });
+        }
     }, []);
 
     //fonction pour retourner sur la liste des posts

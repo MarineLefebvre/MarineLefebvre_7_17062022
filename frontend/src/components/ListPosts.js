@@ -9,30 +9,36 @@ function ListPosts({user, setUser}){
 
     // useEffect et [] pour effectuer la req API uniquement lors du premier appel du component
     useEffect(() => {
-        //ON prépare la req en mettant le token dans le header
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                //TODO : pourquoi user qui est passé depuis le App.js est undefined la première fois ?
-                'Authorization': JSON.parse(localStorage.getItem('user')).token,
-            }
-        };
 
-        //Exécution de la req de type GET
-        fetch(`http://localhost:3000/api/posts`,requestOptions)
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Une erreur est survenue....');
+        //On protège l'url => si l'utilisateur pas authent on le redirige vers la page de connexion
+        if(!JSON.parse(localStorage.getItem('user'))) window.location = "/";
+
+        else {
+            //ON prépare la req en mettant le token dans le header
+            const requestOptions = {
+                method: 'GET',
+                headers: {
+                    //TODO : pourquoi user qui est passé depuis le App.js est undefined la première fois ?
+                    'Authorization': JSON.parse(localStorage.getItem('user')).token,
                 }
-            })
-            .then(data => {
-                //data correspond à la liste des posts du plus ancien au plus récent
-                console.log(data);
-                //On stocke le résultat de l'API dans la variable
-                 setListPost(data);
-            });
+            };
+
+            //Exécution de la req de type GET
+            fetch(`http://localhost:3000/api/posts`, requestOptions)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Une erreur est survenue....');
+                    }
+                })
+                .then(data => {
+                    //data correspond à la liste des posts du plus ancien au plus récent
+                    console.log(data);
+                    //On stocke le résultat de l'API dans la variable
+                    setListPost(data);
+                });
+        }
     }, []);
 
     //Fonction pour formatter la date

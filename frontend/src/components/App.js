@@ -43,21 +43,26 @@ function App(){
                        user={user}
                        setUser={setUser}
                        isAuth={isAuth}
-                       setIsAuth={setIsAuth}/>} />
+                       setIsAuth={setIsAuth}/>}
+            />
             <Route exact path="/login"
                    element={<Login
                        user={user}
                        setUser={setUser}
                        isAuth={isAuth}
-                       setIsAuth={setIsAuth}/>} />
+                       setIsAuth={setIsAuth}/>}
+            />
             <Route exact path="/subscribe" element={<Subscribe/>} />
-            <Route exact path="/posts" element={<ListPosts
-                    user={user}
-                    setUser={setUser}/>} />
+            <Route exact path="/posts"
+                   element={<ListPosts
+                           user={user}
+                           setUser={setUser}/>}
+            />
             {/*On passe l'id du post*/}
             <Route exact path="/post/:postId" element={<OnePost
                     user={user}
-                    setUser={setUser}/>} />
+                    setUser={setUser}/>}
+            />
             <Route exact path="/post" element={<NewPost user={user}/>}/>
             <Route exact path="/updatePost/:postId" element={<NewPost user={user}/>}/>
         </Routes>
