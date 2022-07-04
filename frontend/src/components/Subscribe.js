@@ -14,8 +14,9 @@ function Subscribe(){
 
     //lorsque l'on sort du champ si pas de @ alors alert car l'adresse mail n'est pas valide
     function handleBlur() {
-        if (!mailValue.includes('@')) {
-            alert("Attention, il n'y a pas d'@, ceci n'est pas une adresse valide 😥");
+        //On vérifie que le mail est formé comme ceci : text@text.text
+        if (!/\S+@\S+\.\S+/.test(mailValue)) {
+            alert("Attention, il n'y a pas d'@ et de point, ceci n'est pas une adresse valide 😥");
         }
     }
 
