@@ -1,6 +1,9 @@
 # GROUPOMANIA MARINE LEFEBVRE
 
 ## Backend - API
+
+Il est nécessaire d'exécuter la commande `npm i` dans le répertoire frontend pour installer les dépendances.
+
 ### ATTENTION il est nécessaire de créer un fichier `.env` à la racine pour que l'API fonctionne !!
 #### Ce fichier à pour but de configurer les informations sensibles à utiliser et ne pas les stocker dans le code
 
@@ -11,6 +14,12 @@ Ce dernier contient :
 `DATABASE="databaseName"`
 `SECRET_KEY="randomKey"`
 
-Il sera nécessaire de créer le fichier .env et de modifier les valeurs entre guillements par celles fourni dans le fichier `valuesEnv` du dépôt avant de lancer l'api.
+Il sera nécessaire de créer le fichier .env et de modifier les valeurs entre guillements par celles fourni dans le fichier `valuesEnv.txt` du dépôt avant de lancer l'api.
 
 ## Frontend - React
+
+Il est nécessaire d'exécuter la commande `npm i` dans le répertoire frontend pour installer les dépendances.
+
+Groupamania sera ensuite accessible via l'adresse : `http://localhost:3001/login` depuis un navigateur.
+
+Les informations de connexion pour le compte Administrateur sont fournis dans le fichier `user.txt`.

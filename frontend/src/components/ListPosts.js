@@ -1,6 +1,7 @@
 import '../styles/ListPosts.css';
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import like from '../assets/like.png'
 
 function ListPosts({user, setUser}){
 
@@ -18,7 +19,6 @@ function ListPosts({user, setUser}){
             const requestOptions = {
                 method: 'GET',
                 headers: {
-                    //TODO : pourquoi user qui est passé depuis le App.js est undefined la première fois ?
                     'Authorization': JSON.parse(localStorage.getItem('user')).token,
                 }
             };
@@ -65,6 +65,7 @@ function ListPosts({user, setUser}){
                             {post.name}
                         </h5>
                         <p className="card-text">{post.description}</p>
+                        <p className="card-text">{post.likes} <img src={like} alt="icone pouce"/></p>
                         <p className="card-subtitle horodate">{getParsedDate(post.dateCreation)}</p>
                         <Link to={"/post/"+post._id} className="btn btn-primary">Voir le Post</Link>
                     </div>

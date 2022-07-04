@@ -23,7 +23,6 @@ function OnePost({user, setUser}) {
             const requestOptions = {
                 method: 'GET',
                 headers: {
-                    //TODO : pourquoi user qui est passé depuis le App.js est undefined la première fois ?
                     'Authorization': JSON.parse(localStorage.getItem('user')).token,
                 }
             };
@@ -160,7 +159,6 @@ function OnePost({user, setUser}) {
                         <button className="btn btn-warning" onClick={backToList}>Retour</button>
                         {/*On affiche le bouton de suppression et mise à jour uniquement si le post à été créé par l'utilisateur actuel
                         Ou si ce dernier est admin*/}
-                        {/*TODO pourquoi user qui est passé depuis le App.js est undefined la première fois ?*/}
                         {(JSON.parse(localStorage.getItem('user')).isAdmin || JSON.parse(localStorage.getItem('user')).userId === post.userId) && <div className="admin-btn">
                             <button className="btn btn-primary" onClick={updatePost}>Modifier</button>
                             <button className="btn btn-danger btn-delete" onClick={deletePost}>Supprimer</button>

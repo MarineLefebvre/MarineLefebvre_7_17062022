@@ -29,7 +29,6 @@ function NewPost({user}){
                 const requestOptions = {
                     method: 'GET',
                     headers: {
-                        //TODO : pourquoi user qui est passé depuis le App.js est undefined la première fois ?
                         'Authorization': JSON.parse(localStorage.getItem('user')).token,
                     }
                 };
