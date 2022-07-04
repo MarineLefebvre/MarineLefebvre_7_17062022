@@ -42,6 +42,8 @@ function Subscribe(){
                     setErreur(false);
                     setTextErreur("Tout est OK");
                     alert("L'utilisateur a bien été créé ! Vous pouvez vous connecter");
+                    //On redirige vers la page de connexion
+                    window.location="/login";
                     return response.json();
                 } else {
                     setErreur(true);
