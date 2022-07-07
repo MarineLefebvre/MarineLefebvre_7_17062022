@@ -38,7 +38,7 @@ exports.login = (req, res, next) => {
                     if (!valid) {
                         return res.status(401).json({ error: 'Mot de passe incorrect !' });
                     }
-                    //Si iles correspondent, je génére le token d'accès
+                    //Si il correspondent, je génére le token d'accès
                     res.status(200).json({
                         userId: user._id,
                         isAdmin: user.isAdmin,

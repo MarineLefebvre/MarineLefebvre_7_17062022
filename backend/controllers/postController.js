@@ -109,11 +109,7 @@ exports.likePost = (req, res, next) => {
                 likes = likes+1;
                 usersLiked.push(req.body.userId);
             }
-            //si l'utilisateur n'a pas encore disliké
-            /*else if(req.body.like === -1){
-                dislikes = dislikes+1;
-                usersDisliked.push(req.body.userId);
-            }*/
+
             //si l'utilisateur avait déjà liké ou disliké
             else {
                 //suppression user de la liste des users qui ont like et on décremente nb like si on trouve le user dans le tab
@@ -123,13 +119,7 @@ exports.likePost = (req, res, next) => {
                         likes = likes-1;
                     }
                 }
-                //suppression user de la liste des users qui ont dislike et on décremente nb dislike si on trouve le user dans le tab
-                /*for (let i = 0; i < usersDisliked.length; i++) {
-                    if (usersDisliked[i] === req.body.userId) {
-                        usersDisliked.splice(i, 1);
-                        dislikes = dislikes-1;
-                    }
-                }*/
+
             }
             Post.updateOne({ _id: req.params.id }, { likes: likes,usersLiked : usersLiked})
                 .then(() =>{

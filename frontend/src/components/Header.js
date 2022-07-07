@@ -12,7 +12,7 @@ function Header({user, setUser, isAuth, setIsAuth}) {
         //On supprime l'utilisateur du localStorage
         localStorage.removeItem('user');
         //On met le user dans le state à null via la fonction de mise à jour
-        setUser = null;
+        setUser(null);
     }
 
 

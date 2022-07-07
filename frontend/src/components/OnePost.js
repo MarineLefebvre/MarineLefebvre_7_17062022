@@ -28,6 +28,8 @@ function OnePost({user, setUser}) {
             };
 
             //Exécution de la req de type GET
+            //$permet d'interpréter ce qui suit
+            //on récupère l'id dans l'url
             fetch(`http://localhost:3000/api/posts/${window.location.href.split("/post/")[1]}`, requestOptions)
                 .then(response => {
                     if (response.ok) {
@@ -37,7 +39,7 @@ function OnePost({user, setUser}) {
                     }
                 })
                 .then(data => {
-                    //data correspond à la liste des posts du plus ancien au plus récent
+                    //data correspond au post récupéré
                     console.log(data);
                     //on regarde si l'id de l'utilisateur se trouve dans la liste des utilisateurs ayant liké le post
                     for (let i = 0; i < data.usersLiked.length; i++) {
@@ -116,6 +118,7 @@ function OnePost({user, setUser}) {
             //ON ajoute la valeur du like/unlike et le userId au body
             body: JSON.stringify({
                 userId: JSON.parse(user).userId,
+                //1 pour like et 0 pour retirer le like
                 like: valueLikeApi
             })
         };

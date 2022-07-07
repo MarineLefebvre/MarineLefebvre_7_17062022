@@ -34,7 +34,6 @@ function App(){
             isAuth={isAuth}
             setIsAuth={setIsAuth}/>
         <Routes>
-            {/*TODO : authentGuard*/}
             {/*Déclaration des routes
             Dans le Header on a des Link to qui matche avec un url ici
             Si l'url matche alors le component associé est affiché*/}

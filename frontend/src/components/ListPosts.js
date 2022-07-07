@@ -56,7 +56,7 @@ function ListPosts({user, setUser}){
     return(
         <div className="blockPosts">
             {/*On boucle sur la liste des posts pour afficher une card pour chaque post*/}
-            {/*Chaque est cliquable et redirige vers la page de ce dernier*/}
+            {/*Chaque post est cliquable et redirige vers la page de ce dernier*/}
             {listPosts.map((post) => (
                 <div key={post._id} className="card">
                     <img className="card-img-top" src={post.imageUrl} alt="Image post"/>

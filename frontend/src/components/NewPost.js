@@ -6,7 +6,7 @@ function NewPost({user}){
     //Déclare une variable pour stocker le post retourné par l'API ainsi qu'une fonction de mise à jour
     const [post, setPost] = useState(null);
     const [isLoad, setIsLoad] = useState(false);
-    //on ajoute un contrôle sur l'iamge pour la scoker dès qu'ele change
+    //on ajoute un contrôle sur l'image pour la stocker dès qu'elle change
     const [imageValue, setImageValue] = useState('');
     const [image, setImage] = useState();
 
@@ -70,7 +70,7 @@ function NewPost({user}){
         //ON crée un formData (mise en forme des données du body)
         const formData = new FormData();
         let typeReq;
-        //ON y ajoute le user
+        //ON y ajoute le post
         formData.append('post', JSON.stringify({
             name: e.target['titre'].value,
             description : e.target['description'].value,

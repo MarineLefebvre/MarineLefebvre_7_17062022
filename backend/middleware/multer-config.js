@@ -1,6 +1,6 @@
 const multer = require('multer');
 
-//permet la gestion des images => affectation/suppression à une sauce
+//permet la gestion des images => affectation/suppression
 
 const MIME_TYPES = {
     'image/jpg': 'jpg',
