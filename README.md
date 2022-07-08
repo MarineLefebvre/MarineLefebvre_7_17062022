@@ -22,4 +22,4 @@ Il sera nécessaire de créer le fichier .env et de modifier les valeurs entre g
 - Il est nécessaire d'exécuter la commande `npm i` dans le répertoire frontend pour installer les dépendances.
 - La commande pour lancer l'application est la suivante : `npm run start`
 - Groupamania sera ensuite accessible via l'adresse : `http://localhost:3001/login` depuis un navigateur.
-- Les informations de connexion pour le compte Administrateur sont fournis dans le fichier `user.txt`.
+- Les informations de connexion pour le compte Administrateur sont fournis dans le fichier `LEFEBVRE_Marine_2_compte_admin_072022.txt`.

@@ -8,4 +8,4 @@ PWD_BDD="pwd"
 DATABASE="databaseName"
 SECRET_KEY="randomKey"`
 
-Il sera nécessaire de créer le fichier .env et de modifier les valeurs entre guillements par celles fourni dans le fichier `valuesEnv` du dépôt avant de lancer l'api.
+Il sera nécessaire de créer le fichier .env et de modifier les valeurs entre guillements par celles fourni dans le fichier `valuesEnv.txt` du dépôt avant de lancer l'api.
