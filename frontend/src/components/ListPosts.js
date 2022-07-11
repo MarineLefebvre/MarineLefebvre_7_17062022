@@ -33,7 +33,7 @@ function ListPosts({user, setUser}){
                     }
                 })
                 .then(data => {
-                    //data correspond à la liste des posts du plus ancien au plus récent
+                    //data correspond à la liste des posts du plus récent au plus ancien
                     console.log(data);
                     //On stocke le résultat de l'API dans la variable
                     setListPost(data);

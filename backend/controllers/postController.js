@@ -110,7 +110,7 @@ exports.likePost = (req, res, next) => {
                 usersLiked.push(req.body.userId);
             }
 
-            //si l'utilisateur avait déjà liké ou disliké
+            //si l'utilisateur avait déjà liké ou
             else {
                 //suppression user de la liste des users qui ont like et on décremente nb like si on trouve le user dans le tab
                 for (let i = 0; i < usersLiked.length; i++) {

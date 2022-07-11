@@ -28,6 +28,7 @@ function Header({user, setUser, isAuth, setIsAuth}) {
 
                 {/*On affiche les éléments du header en fonction de la connexion ou non de l'utilisateur*/}
                 <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+                    {/*isAuth est le booléan de connection si il est à true on affiche les menu en question*/}
                     {isAuth && <Link className="me-3 py-2 text-dark text-decoration-none" to="/posts">
                         Posts
                     </Link>}

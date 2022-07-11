@@ -61,7 +61,7 @@ function OnePost({user, setUser}) {
 
     //fonction pour mettre à jour un post si il a été créé par l'utilisateur
     function updatePost(){
-        //On redirige vers la page de création de post en passant l'id du post en param
+        //On redirige vers la page de création de post en passant l'id du post dans l'url
         window.location = '/updatePost/'+post._id;
     }
 
@@ -84,7 +84,6 @@ function OnePost({user, setUser}) {
                 }
             })
             .then(data => {
-                //data correspond à la liste des posts du plus ancien au plus récent
                 console.log(data);
                 alert("Le post a bien été supprimé !");
                 backToList();
@@ -134,7 +133,6 @@ function OnePost({user, setUser}) {
                 }
             })
             .then(data => {
-                //data correspond à la liste des posts du plus ancien au plus récent
                 console.log(data);
             });
     }

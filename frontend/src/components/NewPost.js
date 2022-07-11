@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 
 function NewPost({user}){
 
+    //permet de crée ou de modifier un post
+
     //Déclare une variable pour stocker le post retourné par l'API ainsi qu'une fonction de mise à jour
     const [post, setPost] = useState(null);
     const [isLoad, setIsLoad] = useState(false);
@@ -21,7 +23,7 @@ function NewPost({user}){
 
         else {
             setIsLoad(false);
-            //stockage du postId
+            //stockage du postId, récupéré depuis l'url
             const postId = window.location.href.split("/updatePost/")[1];
 
             if (postId) {
@@ -43,7 +45,7 @@ function NewPost({user}){
                         }
                     })
                     .then(data => {
-                        //data correspond à la liste des posts du plus ancien au plus récent
+                        //data correspond au post récupéré pour la modification
                         console.log(data);
                         //On stocke le résultat de l'API dans la variable
                         setPost(data);
@@ -95,7 +97,7 @@ function NewPost({user}){
             body: formData
         };
 
-        //Si on a pas récupéré de post => mode création => on joue la req API de création
+        //Si on a pas récupéré de post donc mode création donc on joue la req API de création
         if(!isLoad){
             //Exécution de la req
             fetch('http://localhost:3000/api/posts', requestOptions)
@@ -112,7 +114,7 @@ function NewPost({user}){
                     window.location = '/posts';
                 });
         }
-        //Sinon la req API d'update
+        //Sinon la req api de mise à jour
         else{
             //Exécution de la req
             fetch(`http://localhost:3000/api/posts/${window.location.href.split("/updatePost/")[1]}`, requestOptions)

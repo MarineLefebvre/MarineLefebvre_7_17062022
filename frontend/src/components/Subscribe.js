@@ -58,7 +58,7 @@ function Subscribe(){
         <form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label>Email :</label>
-                {/*Utilisation d'un champ de formulaire contrôlé pour érifier la validité de l'adresse mail*/}
+                {/*Utilisation d'un champ de formulaire contrôlé pour vérifier la validité de l'adresse mail*/}
                 <input type="email" className="form-control" id="email" name="email"
                        placeholder='Entrez votre mail'
                        onChange={handleInput}

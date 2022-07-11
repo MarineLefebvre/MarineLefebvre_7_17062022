@@ -50,7 +50,7 @@ function Login({user, setUser, isAuth, setIsAuth}){
             });
     }
 
-    {/*Si pas user pas co alors demande de connexion*/}
+    {/*Si user pas co alors demande de connexion*/}
     {/*Sinon redirection vers la liste des posts*/}
     if(!isAuth){
         return(
